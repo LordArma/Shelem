@@ -1,0 +1,17 @@
+# Build artefacts. The site itself has no build step, so anything zipped up
+# here is a hand-made bundle for uploading, not a source file.
+*.zip
+
+# Windows and macOS file managers, which both touch this tree over WSL.
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editors.
+.vscode/
+.idea/
+*.swp
+
+# Only ever present when something was run against the site by hand.
+node_modules/
+*.log
