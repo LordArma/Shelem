@@ -88,6 +88,13 @@ Two details worth knowing if you touch the number handling:
 
 Saved games live under the `shelem.v2` key; games from the older version of this table are migrated on first load.
 
+## License
+
+[MIT](LICENSE).
+
+The bundled fonts are third-party and carry their own terms: Lalezar and
+Vazirmatn are both licensed under the SIL Open Font License 1.1.
+
 ## Credits
 
 Built by [Arma](https://lordarma.com/).
