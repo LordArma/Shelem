@@ -7,6 +7,8 @@ A scoreboard for **Shelem** (شلم), the Persian trick-taking card game. Track 
 The interface is in Persian and lays out right-to-left. Everything else (the code, this README) is in English.
 
 > Live: [lordarma.com/shelem](https://lordarma.com/shelem/)
+>
+> Write-up: [جدول امتیار شلم بروزرسانی و منبع‌باز شد](https://lordarma.com/chelem-with-claude-code/), a blog post on this rewrite and on open-sourcing it (in Persian)
 
 ## What it does
 

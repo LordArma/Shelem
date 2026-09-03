@@ -7,6 +7,8 @@
 رابط کاربری به زبان فارسی و به‌صورت راست‌به‌چپ طراحی شده است. کد پروژه و این README به زبان انگلیسی هستند.
 
 > نسخه آنلاین: [lordarma.com/shelem](https://lordarma.com/shelem/)
+>
+> نوشته وبلاگ: [جدول امتیار شلم بروزرسانی و منبع‌باز شد](https://lordarma.com/chelem-with-claude-code/)
 
 ## امکانات
 
