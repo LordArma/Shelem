@@ -160,7 +160,7 @@ function noteFor(h, a, b) {
   const dScore = h.d === "A" ? a : b;
   const oScore = h.d === "A" ? b : a;
   if (dScore > 0 && dScore < h.c && state.rule === "contract")
-    return { t: "warn", m: `امتیاز حاکم از تعهد (${fa(h.c)}) کمتر است — یعنی سوخته و باید منفی باشد` };
+    return { t: "warn", m: `امتیاز حاکم از تعهد (${fa(h.c)}) کمتر است، یعنی سوخته و باید منفی باشد` };
   if (dScore === -h.c) return { t: "bad", m: "تعهد سوخت" };
   if (dScore >= h.c) return { t: "ok", m: "تعهد انجام شد" };
   if (oScore > rules(state.mode).total)
@@ -269,7 +269,7 @@ function calcPanel(h) {
     <button type="button" class="apply" data-act="calc-go">پر کن</button>
     <span class="hint">${
       h.d
-        ? `تعهد ${fa(h.c)} — ${state.rule === "actual"
+        ? `تعهد ${fa(h.c)}: ${state.rule === "actual"
             ? "در صورت بردن، امتیاز واقعی ثبت می‌شود"
             : "در صورت بردن، به اندازه‌ی تعهد ثبت می‌شود"}؛ در صورت سوختن ${fa(-h.c)}. سهم حریف: ${fa(rules(state.mode).total)} منهای امتیاز حاکم.`
         : "اول حاکم این دست را انتخاب کنید."
@@ -349,7 +349,7 @@ function deleteHand(id) {
   state.hands = state.hands.filter(h => h.id !== id);
   if (openCalc === id) openCalc = null;
   save(); render();
-  toast("دست حذف شد — قابل بازگردانی");
+  toast("دست حذف شد، قابل بازگردانی است");
 }
 
 function resetGame() {
@@ -362,7 +362,7 @@ function resetGame() {
   state.hands = [newHand(state.mode)];
   openCalc = null;
   save(); render();
-  toast("بازی پاک شد — قابل بازگردانی");
+  toast("بازی پاک شد، قابل بازگردانی است");
 }
 
 // Switching mode changes the legal contract range, so clamp what is already
@@ -378,14 +378,14 @@ function setMode(m) {
     if (c !== h.c) { h.c = c; moved++; }
   });
   save(); render(); syncModeUI();
-  toast(moved ? `حالت ${r.label} — ${fa(moved)} تعهد اصلاح شد` : `حالت ${r.label}`);
+  toast(moved ? `حالت ${r.label}: ${fa(moved)} تعهد اصلاح شد` : `حالت ${r.label}`);
 }
 
 function syncModeUI() {
   const r = rules(state.mode);
   $("modeChipText").textContent = `${r.label} · تعهد ${fa(r.min)} تا ${fa(r.max)}`;
   const hint = $("modeHint");
-  if (hint) hint.textContent = `تعهد از ${fa(r.min)} تا ${fa(r.max)} — مجموع امتیاز هر دست ${fa(r.total)}`;
+  if (hint) hint.textContent = `تعهد از ${fa(r.min)} تا ${fa(r.max)}، مجموع امتیاز هر دست ${fa(r.total)}`;
   document.querySelectorAll("[data-mode]").forEach(b =>
     b.setAttribute("aria-pressed", String(b.dataset.mode === state.mode)));
 }
@@ -394,12 +394,12 @@ function summary() {
   const d = derive();
   const lines = [
     "جدول امتیاز شلم",
-    `${state.nameA} ${fa(d.ra)}  —  ${fa(d.rb)} ${state.nameB}`,
-    `بازی تا ${fa(state.target)} امتیاز — ${rules(state.mode).label}`,
+    `${state.nameA} ${fa(d.ra)} : ${fa(d.rb)} ${state.nameB}`,
+    `بازی تا ${fa(state.target)} امتیاز، حالت ${rules(state.mode).label}`,
     ""
   ];
   d.rows.forEach(r => {
-    const who = r.h.d === "A" ? state.nameA : r.h.d === "B" ? state.nameB : "—";
+    const who = r.h.d === "A" ? state.nameA : r.h.d === "B" ? state.nameB : "نامشخص";
     lines.push(`دست ${fa(r.i + 1)} | حاکم: ${who} (${fa(r.h.c)}) | ${fa(r.a)} : ${fa(r.b)} | جمع ${fa(r.ra)} : ${fa(r.rb)}`);
   });
   if (d.winner) lines.push("", `برنده: ${d.winner === "A" ? state.nameA : state.nameB}`);
@@ -500,7 +500,7 @@ handsEl.addEventListener("keydown", e => {
   }
 });
 
-/* team names — inline on the board and in settings, kept in sync */
+/* team names: inline on the board and in settings, kept in sync */
 function setName(which, value) {
   const v = value.trim() || (which === "A" ? "تیم آ" : "تیم ب");
   state[which === "A" ? "nameA" : "nameB"] = v;
@@ -566,9 +566,9 @@ sheet.querySelectorAll("[data-rule]").forEach(b =>
     save();
     if (openCalc) render(); else paint();
   }));
-/* clearing the board is destructive, so the click only opens a confirmation —
-   nothing is wiped until the user accepts a second time. Cancel holds focus so
-   a stray Enter can never clear the table. */
+/* clearing the board is destructive, so the click only opens a confirmation.
+   Nothing is wiped until the user accepts a second time, and Cancel holds
+   focus so a stray Enter can never clear the table. */
 const confirmSheet = $("confirmSheet");
 function askReset() {
   if (sheet.open) sheet.close();
