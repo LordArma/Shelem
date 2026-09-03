@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0C1A16" />
+<meta name="description" content="جدول امتیازدهی آنلاین بازی شلم - ثبت حاکم و تعهد هر دست، محاسبه خودکار جمع امتیاز تیم‌ها، اختلاف لحظه‌ای و تشخیص برنده. ساخته شده توسط آرما" />
+<title>جدول امتیاز شلم - آرما</title>
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" />
+<link rel="stylesheet" href="assets/css/fonts.css" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="topbar">
+    <a class="icon-btn" href="https://lordarma.com/" target="_blank" rel="noopener" aria-label="صفحه اصلی lordarma.com">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    </a>
+    <h1>
+      <a href="https://lordarma.com/shelem/" target="_blank" rel="noopener">جدول امتیاز شلم</a>
+      <span class="sub">ARMA</span>
+    </h1>
+    <button class="icon-btn" id="btnSettings" aria-label="تنظیمات بازی">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+  </header>
+
+  <section class="board" aria-label="تابلوی امتیاز">
+    <div class="board-grid">
+      <div class="side a" id="sideA">
+        <div class="suit" aria-hidden="true">♠</div>
+        <input class="name" id="nameA" value="تیم آ" maxlength="18" aria-label="نام تیم آ" />
+        <div class="total num" id="totalA">۰</div>
+        <div class="togo" id="togoA"></div>
+      </div>
+
+      <div class="gutter">
+        <div class="lbl">اختلاف</div>
+        <div class="diff num" id="diff">۰</div>
+        <div class="target"><span>تا</span> <b class="num" id="targetLabel">۱۲۰۰</b></div>
+      </div>
+
+      <div class="side b" id="sideB">
+        <div class="suit" aria-hidden="true">♥</div>
+        <input class="name" id="nameB" value="تیم ب" maxlength="18" aria-label="نام تیم ب" />
+        <div class="total num" id="totalB">۰</div>
+        <div class="togo" id="togoB"></div>
+      </div>
+    </div>
+    <div class="rails">
+      <div class="rail a"><div class="track"><span class="fill" id="barA" style="width:0%"></span></div></div>
+      <div class="rail b"><div class="track"><span class="fill" id="barB" style="width:0%"></span></div></div>
+    </div>
+  </section>
+
+  <div id="bannerSlot"></div>
+
+  <div class="section-label">
+    <span>دست‌ها</span>
+    <i class="rule"></i>
+    <span class="chip" id="modeChip"><span class="dot"></span><span id="modeChipText"></span></span>
+  </div>
+  <div class="hands" id="hands"></div>
+
+</div>
+
+<div class="dock">
+  <div class="dock-inner">
+    <button class="btn-add" id="btnAdd">+ دست جدید</button>
+    <button class="icon-btn" id="btnUndo" aria-label="بازگرداندن آخرین تغییر" disabled>
+      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+    </button>
+    <button class="icon-btn" id="btnCopy" aria-label="کپی خلاصه بازی">
+      <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span></span></div>
+
+<dialog class="sheet" id="sheet">
+  <div class="sheet-card">
+    <div class="sheet-head">
+      <h2>تنظیمات بازی</h2>
+      <button class="icon-btn" id="btnClose" aria-label="بستن">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="row">
+        <div class="k"><b>امتیاز هدف</b><span>بازی تا رسیدن یکی از تیم‌ها به این امتیاز ادامه دارد</span></div>
+        <input type="number" id="setTarget" min="100" step="10" />
+      </div>
+      <div class="row">
+        <div class="k"><b>نام تیم آبی</b></div>
+        <input type="text" class="a" id="setNameA" maxlength="18" />
+      </div>
+      <div class="row">
+        <div class="k"><b>نام تیم قرمز</b></div>
+        <input type="text" class="b" id="setNameB" maxlength="18" />
+      </div>
+      <div class="row">
+        <div class="k"><b>حالت بازی</b><span id="modeHint"></span></div>
+      </div>
+      <div class="row" style="padding-top:0">
+        <div class="seg" style="width:100%" role="group" aria-label="حالت بازی">
+          <button data-mode="noJoker" style="flex:1">بدون جوکر</button>
+          <button data-mode="joker" style="flex:1">با جوکر</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="k"><b>قانون محاسبه‌گر</b><span>وقتی حاکم تعهدش را می‌بَرد، چه امتیازی بگیرد</span></div>
+      </div>
+      <div class="row" style="padding-top:0">
+        <div class="seg" style="width:100%" role="group" aria-label="قانون محاسبه‌گر">
+          <button data-rule="contract" style="flex:1">به اندازه تعهد</button>
+          <button data-rule="actual" style="flex:1">امتیاز واقعی</button>
+        </div>
+      </div>
+      <button class="btn-danger" id="btnReset">پاک کردن کامل بازی</button>
+      <div class="credit">ساخته شده توسط <a href="https://lordarma.com/" target="_blank" rel="noopener">آرما</a></div>
+    </div>
+  </div>
+</dialog>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>
