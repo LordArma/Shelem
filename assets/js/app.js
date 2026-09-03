@@ -14,6 +14,10 @@ const MODES = {
   joker:   { label: "با جوکر",   min: 120, max: 200, total: 200 }
 };
 const DEFAULT_MODE = "noJoker";
+// "Yasa": a declarer who collects fewer than this many card points has not just
+// gone set, they have collapsed, and the house rule doubles the penalty. The
+// threshold is the same 85 in both modes, only the contract range moves.
+const YASA = 85;
 const rules = m => MODES[m] || MODES[DEFAULT_MODE];
 function contracts(m) {
   const r = rules(m), out = [];
@@ -161,6 +165,7 @@ function noteFor(h, a, b) {
   const oScore = h.d === "A" ? b : a;
   if (dScore > 0 && dScore < h.c && state.rule === "contract")
     return { t: "warn", m: `امتیاز حاکم از تعهد (${fa(h.c)}) کمتر است، یعنی سوخته و باید منفی باشد` };
+  if (dScore === -2 * h.c) return { t: "bad", m: `یاسا، دو برابر تعهد (${fa(h.c)}) منفی شد` };
   if (dScore === -h.c) return { t: "bad", m: "تعهد سوخت" };
   if (dScore >= h.c) return { t: "ok", m: "تعهد انجام شد" };
   if (oScore > rules(state.mode).total)
@@ -173,7 +178,8 @@ function computeHand(h, collected) {
   const total = rules(state.mode).total;
   const p = clamp(collected, 0, total);
   const made = p >= h.c;
-  const declarer = made ? (state.rule === "actual" ? p : h.c) : -h.c;
+  const penalty = p < YASA ? -2 * h.c : -h.c;     // yasa doubles it
+  const declarer = made ? (state.rule === "actual" ? p : h.c) : penalty;
   const opponent = total - p;
   return h.d === "A" ? { a: declarer, b: opponent } : { a: opponent, b: declarer };
 }
@@ -271,7 +277,7 @@ function calcPanel(h) {
       h.d
         ? `تعهد ${fa(h.c)}: ${state.rule === "actual"
             ? "در صورت بردن، امتیاز واقعی ثبت می‌شود"
-            : "در صورت بردن، به اندازه‌ی تعهد ثبت می‌شود"}؛ در صورت سوختن ${fa(-h.c)}. سهم حریف: ${fa(rules(state.mode).total)} منهای امتیاز حاکم.`
+            : "در صورت بردن، به اندازه‌ی تعهد ثبت می‌شود"}؛ در صورت سوختن ${fa(-h.c)} و در صورت یاسا، یعنی کمتر از ${fa(YASA)} امتیاز، ${fa(-2 * h.c)}. سهم حریف: ${fa(rules(state.mode).total)} منهای امتیاز حاکم.`
         : "اول حاکم این دست را انتخاب کنید."
     }</span>`;
   return box;

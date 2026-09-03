@@ -13,7 +13,7 @@ The interface is in Persian and lays out right-to-left. Everything else (the cod
 ## What it does
 
 - **Per-hand entry:** pick the declarer (حاکم) and their contract (تعهد), then enter both teams' scores.
-- **Assist calculator:** type the card points the declarer actually collected and both scores are filled in, including the opponent's share and a negative contract when the declarer goes set.
+- **Assist calculator:** type the card points the declarer actually collected and both scores are filled in, including the opponent's share and the right penalty when the declarer goes set, doubled for a yasa.
 - **Live totals:** running sums per hand, point difference, progress bars, "points to target" per team, and a winner banner on the hand where the target is first crossed.
 - **Two house variants:** With Joker and Without Joker, which change both the legal contract range and the points available in a hand (see below).
 - **Sanity notes:** a non-blocking hint when a hand looks wrong, e.g. a declarer scoring below their own contract, or a hand totalling more than the deck allows.
@@ -33,7 +33,9 @@ The scoring depends on which deck the table is using, since a joker carries card
 
 Contracts step by 5, and the top of each range is a **shelem** (a bid for every point in the deck). The declarer's score and the opponents' share always sum to the mode's total, so switching modes rescales the calculator. Contracts already on the table are clamped into the new range when you switch, rather than being left as impossible bids.
 
-The **calculator rule** setting decides what a successful declarer is credited with: their contract (به اندازه تعهد) or the points they actually took (امتیاز واقعی). A declarer who goes set always scores minus their contract.
+The **calculator rule** setting decides what a successful declarer is credited with: their contract (به اندازه تعهد) or the points they actually took (امتیاز واقعی).
+
+A declarer who goes set scores minus their contract. Collecting fewer than **85** card points is a **yasa** (یاسا), a collapse rather than a near miss, and it costs twice the contract: bid 130 and finish under 85 and the hand is worth -260. The threshold is 85 in both modes.
 
 The default target score is **1200**; change it in settings.
 
