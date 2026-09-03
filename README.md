@@ -1,3 +1,5 @@
+[نسخه فارسی](README.fa.md)
+
 # Shelem Scoreboard
 
 A scoreboard for **Shelem** (شلم), the Persian trick-taking card game. Track the declarer and contract for each hand, and the running totals, point difference, and winner are worked out for you.
@@ -14,6 +16,7 @@ The interface is in Persian and lays out right-to-left. Everything else — the 
 - **Two house variants** — With Joker and Without Joker, which change both the legal contract range and the points available in a hand (see below).
 - **Sanity notes** — a non-blocking hint when a hand looks wrong, e.g. a declarer scoring below their own contract, or a hand totalling more than the deck allows.
 - **Undo** — 40 steps deep, covering hand deletion, resets, and mode switches.
+- **New game** — a reset button in the action bar clears every hand and score behind a confirmation step, leaving team names, target score, mode, and calculator rule untouched. It is undoable too.
 - **Copy summary** — the whole game as plain text, hand by hand, for pasting into a chat.
 - **Autosave** — the game is kept in `localStorage`, so a refresh or a closed tab loses nothing.
 

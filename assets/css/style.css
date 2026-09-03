@@ -255,6 +255,7 @@ select.contract option{background:var(--felt);color:var(--ink)}
 .btn-add:hover{filter:brightness(1.06)}
 .btn-add:active{transform:translateY(1px)}
 .dock .icon-btn{background:var(--felt-hi)}
+.icon-btn.danger:hover{color:var(--bad);border-color:rgba(226,114,107,.45);background:rgba(226,114,107,.09)}
 .dock .icon-btn[disabled]{opacity:.35;cursor:not-allowed}
 .dock .icon-btn[disabled]:hover{color:var(--ink-dim);border-color:var(--line);background:var(--felt-hi)}
 
@@ -289,6 +290,17 @@ dialog.sheet::backdrop{background:rgba(6,14,12,.72);backdrop-filter:blur(3px)}
   color:var(--bad);border:1px solid rgba(226,114,107,.35);background:rgba(226,114,107,.07);
 }
 .btn-danger:hover{background:rgba(226,114,107,.14)}
+
+/* ---------- confirm dialog ---------- */
+.confirm-text{margin:16px 0 0;font-size:.9rem;line-height:1.8;color:var(--ink-dim)}
+.confirm-actions{display:flex;gap:10px;margin-top:18px}
+.confirm-actions button{flex:1;padding:12px 10px;border-radius:12px;font-weight:700;font-size:.95rem}
+.btn-ghost{border:1px solid var(--line);background:var(--felt-hi);color:var(--ink)}
+.btn-ghost:hover{background:var(--felt-top);border-color:var(--ink-faint)}
+.btn-danger-solid{background:linear-gradient(180deg,#E8837C,var(--bad));color:#2B100E}
+.btn-danger-solid:hover{filter:brightness(1.07)}
+.btn-danger-solid:active{transform:translateY(1px)}
+.confirm-hint{margin:14px 0 0;text-align:center;font-size:.72rem;color:var(--ink-faint)}
 .credit{text-align:center;font-size:.72rem;color:var(--ink-faint);padding-top:14px}
 .credit a{color:var(--gold-dim);text-decoration:none}
 .credit a:hover{color:var(--gold)}
@@ -307,6 +319,9 @@ dialog.sheet::backdrop{background:rgba(6,14,12,.72);backdrop-filter:blur(3px)}
 
 @media (max-width:520px){
   body{padding:14px 12px calc(108px + env(safe-area-inset-bottom))}
+  .dock-inner{gap:7px}
+  .dock .icon-btn{width:40px;height:40px;flex:0 0 40px}
+  .btn-add{padding:14px 12px}
   .gutter{min-width:88px;padding:16px 8px}
   .side{padding:16px 8px 12px}
   .hand{grid-template-columns:36px 1fr}

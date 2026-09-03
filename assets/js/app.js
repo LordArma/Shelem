@@ -566,12 +566,23 @@ sheet.querySelectorAll("[data-rule]").forEach(b =>
     save();
     if (openCalc) render(); else paint();
   }));
-$("btnReset").addEventListener("click", () => {
-  if (confirm("کل بازی پاک شود؟\nنام تیم‌ها و امتیاز هدف باقی می‌مانند و می‌توانید تغییر را برگردانید.")) {
-    sheet.close();
-    resetGame();
-  }
+/* clearing the board is destructive, so the click only opens a confirmation —
+   nothing is wiped until the user accepts a second time. Cancel holds focus so
+   a stray Enter can never clear the table. */
+const confirmSheet = $("confirmSheet");
+function askReset() {
+  if (sheet.open) sheet.close();
+  confirmSheet.showModal();
+  $("btnConfirmNo").focus();
+}
+$("btnResetDock").addEventListener("click", askReset);
+$("btnReset").addEventListener("click", askReset);
+$("btnConfirmNo").addEventListener("click", () => confirmSheet.close());
+$("btnConfirmYes").addEventListener("click", () => {
+  confirmSheet.close();
+  resetGame();
 });
+confirmSheet.addEventListener("click", e => { if (e.target === confirmSheet) confirmSheet.close(); });
 
 /* keyboard */
 document.addEventListener("keydown", e => {
